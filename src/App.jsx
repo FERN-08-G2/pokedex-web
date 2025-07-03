@@ -6,6 +6,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */} //tambah route yaa untuk
+        halaman lain jadi jangan di file yang sudah ada disini di ubah.. jadi
+        setiap org buat file baru trus ngoding di file itu aja ya..
       </Routes>
     </BrowserRouter>
   );
