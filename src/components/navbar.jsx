@@ -4,6 +4,7 @@ import { HiViewList } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import input from "daisyui/components/input";
 import { GiRegeneration } from "react-icons/gi";
+import { useNavigate } from "react-router";
 
 function Logo() {
   return (
@@ -28,13 +29,13 @@ function Logo() {
 function Longsearch() {
   return (
     <>
-      <div className="longSearch bg-white rounded-full border-1 border-[#c5c5c5] flex flex-row justify-between p-2 items-center  hidden sm:flex">
+      <div className="longSearch bg-white rounded-full border-1 border-[#c5c5c5] flex flex-row justify-between p-2 items-center ">
         <input
           type="text"
-          className="outline-none"
+          className="outline-none text-black placeholder:text-black/50 px-4"
           placeholder="Search"
         ></input>
-        <BiSearch />
+        <BiSearch className="text-black text-xl" />
       </div>
     </>
   );
@@ -82,8 +83,9 @@ function DropdownBtn() {
 }
 
 function NavbarSec() {
+  const navigate = useNavigate();
   return (
-    <nav className="navbar bg-[#DD092F] shadow-sm fixed flex-row d-">
+    <nav className="navbar bg-[#DD092F] shadow-sm flex-row px-8">
       <div className="navbar-start">
         {/* <div className="logo lg:w-[192px] h-[61px]">
                     <img src="https://vanilla-web-pokedex.pages.dev/assets/images/pokedex-logo.png" alt="logo" className='' />
@@ -96,26 +98,27 @@ function NavbarSec() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li className="capitalize text-white text-[16px]">
-            <a>
+            <a onClick={() => navigate("/")}>
               <AiFillHome /> home
             </a>
           </li>
           <li className="capitalize text-white text-[16px]">
-            <a>
+            <a onClick={() => navigate("/mypokemon")}>
               <MdCatchingPokemon />
-              pokemon
+              My pokemon
             </a>
           </li>
           <li className="capitalize text-white text-[16px]">
-            <a>
+            <a onClick={() => navigate("/evolve")}>
               <GiRegeneration /> generation detail
             </a>
           </li>
         </ul>
       </div>
-      <div className="navbar-end lg-hide">
-        <Longsearch />
-        {/* <Smallsearch />  */}
+      <div className="navbar-end hidden lg:flex text-[#DD092F]">.</div>
+      <div className="navbar-end lg:hidden ">
+        {/* <Longsearch /> */}
+        {/* <Smallsearch /> */}
         <DropdownBtn />
       </div>
     </nav>
