@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BaseApi } from "../api/BaseApi";
+import NavbarSec from "../components/navbar";
 
 export default function Home() {
   // const [data, setData] = useState([])
@@ -18,5 +19,9 @@ export default function Home() {
   //   getData()
   // }, [])
 
-  return <div>Home</div>;
+  return (
+    <div className="">
+      <NavbarSec />
+    </div>
+  );
 }

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Router, Routes } from "react-router";
 import Home from "./pages/Home";
 import DetailsPages from "./pages/Detail";
+import EvolutionPage from "./pages/EvolutionPage";
 
 export default function App() {
   return (
@@ -8,9 +9,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail" element={<DetailsPages />} />
-        {/* <Route path="/" element={<Home />} /> */} //tambah route yaa untuk
-        halaman lain jadi jangan di file yang sudah ada disini di ubah.. jadi
-        setiap org buat file baru trus ngoding di file itu aja ya..
+        <Route path="/evolve" element={<EvolutionPage />} />
       </Routes>
     </BrowserRouter>
   );
