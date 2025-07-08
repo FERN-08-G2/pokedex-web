@@ -52,6 +52,7 @@ function Smallsearch() {
 }
 
 function DropdownBtn() {
+  const navigate = useNavigate();
   return (
     <div className="dropdown relative">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -62,18 +63,18 @@ function DropdownBtn() {
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow top-[40px] right-0"
       >
         <li className="capitalize">
-          <a>
+          <a onClick={() => navigate("/")}>
             <AiFillHome /> home
           </a>
         </li>
         <li>
-          <a className="capitalize">
+          <a onClick={() => navigate("/my-pokemon")} className="capitalize">
             <MdCatchingPokemon />
             pokemon
           </a>
         </li>
         <li className="capitalize">
-          <a>
+          <a onClick={() => navigate("/evolve")}>
             <GiRegeneration /> generation detail
           </a>
         </li>
@@ -103,7 +104,7 @@ function NavbarSec() {
             </a>
           </li>
           <li className="capitalize text-white text-[16px]">
-            <a onClick={() => navigate("/mypokemon")}>
+            <a onClick={() => navigate("/my-pokemon")}>
               <MdCatchingPokemon />
               My pokemon
             </a>
