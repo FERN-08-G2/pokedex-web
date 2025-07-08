@@ -63,11 +63,11 @@ export default function Home() {
   }, [currentPage]);
 
   return (
-    <div className="">
+    <div className="bg-[url(./assets/bg-detail.png)] bg-cover">
       <NavbarSec />
 
       {/* serachbar */}
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col  justify-center items-center">
         <img src={logo} alt="logo" className="w-1/2" />
         <div className="flex justify-center items-center w-1/2 mx-auto pt-6">
           <div className="bg-white rounded-full border-1 border-gray-500 flex flex-row justify-between p-2 item-center w-full">

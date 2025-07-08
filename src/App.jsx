@@ -9,7 +9,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/detail" element={<DetailsPages />} />
+        <Route path="/detail/:id" element={<DetailsPages />} />
         <Route path="/evolve" element={<EvolutionPage />} />
         <Route path="/my-pokemon" element={<Favourite />} />
       </Routes>

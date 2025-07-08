@@ -37,12 +37,14 @@ export default function ItemCard({ data }) {
           <div className="flex gap-4">
             <button
               onClick={handleReadMoreClick}
-              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer">
+              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
+            >
               Read More
             </button>
             <button
               // onClick={handleReadMoreClick}
-              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer">
+              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
+            >
               <MdOutlinePlaylistAdd />
             </button>
           </div>
