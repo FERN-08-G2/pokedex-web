@@ -5,6 +5,7 @@ import logo from "../assets/pokedexHero.png";
 import { BiSearch } from "react-icons/bi";
 import ItemCard from "../components/ItemCard";
 import axios from "axios";
+import PaginationControls from "../components/PaginationControls";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -63,7 +64,7 @@ export default function Home() {
   }, [currentPage]);
 
   return (
-    <div className="bg-[url(./assets/bg-detail.png)] bg-cover">
+    <div className="bg-[url(./assets/bg-detail.png)] bg-cover min-h-screen">
       <NavbarSec />
 
       {/* serachbar */}
@@ -91,6 +92,13 @@ export default function Home() {
           })
         )}
       </div>
+
+      {/* pagination control */}
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
