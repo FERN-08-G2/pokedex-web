@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function CardDetail({ pokemon, descript }) {
+export default function CardDetail({ pokemon, descript, selectedLang }) {
+  const [abilitiesLang, setAbilitiesLang] = useState([]);
   const statLabels = {
     hp: "HP",
     attack: "ATK",
@@ -10,6 +11,31 @@ export default function CardDetail({ pokemon, descript }) {
     "special-defense": "SpD",
     speed: "SPD",
   };
+
+  const getAbilities = async () => {
+    try {
+      const abilityDetailPromises = pokemon.abilities.map((ability) =>
+        axios.get(ability.ability.url)
+      );
+
+      const responses = await Promise.all(abilityDetailPromises);
+
+      const detailedAbilities = responses.map((response) => response.data);
+
+      setAbilitiesLang(detailedAbilities);
+    } catch (error) {
+      console.error("Error fetching abilities:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAbilities();
+  }, []);
+
+  const japanLang = abilitiesLang.map((ability) =>
+    ability.names.find((name) => name.language.name === "ja")
+  );
+
   return (
     <>
       <div className="flex justify-center items-center">
@@ -41,27 +67,33 @@ export default function CardDetail({ pokemon, descript }) {
 
             <div className="grid grid-cols-2 gap-3 mt-2 mb-4 w-full max-w-[400px]">
               <div className="bg-lime-600/70 rounded-md px-3 py-2 flex justify-between items-center">
-                <span className="text-sm font-bold text-white">Height</span>
+                <span className="text-sm font-bold text-white">
+                  {selectedLang === "ja" ? `身長` : `Height`}
+                </span>
                 <span className="text-sm font-normal text-white">
                   {pokemon.height / 10} m
                 </span>
               </div>
 
               <div className="bg-lime-600/70 rounded-md px-3 py-2 flex justify-between items-center">
-                <span className="text-sm font-bold text-white">Weight</span>
+                <span className="text-sm font-bold text-white">
+                  {selectedLang === "ja" ? `体重` : `Weight`}
+                </span>
                 <span className="text-sm font-normal text-white">
                   {pokemon.weight / 10} kg
                 </span>
               </div>
             </div>
 
-            <h3 className="font-semibold text-white text-xl mb-1">Stats</h3>
+            <h3 className="font-semibold text-white text-xl mb-1">
+              {selectedLang === "ja" ? `ステータス` : `Stats`}
+            </h3>
             <div className="grid grid-cols-2 gap-3 max-w-[400px]">
               {pokemon.stats.map((stat, index) => {
                 const label = statLabels[stat.stat.name];
                 let bgColor = null;
 
-                if (label === "HP") {
+                if (label === "HP" || label === "体力") {
                   bgColor = "bg-red-600";
                 } else if (label === "ATK") {
                   bgColor = "bg-orange-600";
@@ -75,26 +107,39 @@ export default function CardDetail({ pokemon, descript }) {
                   bgColor = "bg-pink-600";
                 }
 
+                const labelJA = {
+                  HP: "体力",
+                  ATK: "攻撃力",
+                  DEF: "防御力",
+                  SpA: "特攻",
+                  SpD: "特防",
+                  SPD: "素早さ",
+                };
+
                 return (
                   <div
                     key={index}
                     className={`flex justify-between items-center rounded px-3 py-2 font-bold text-white ${bgColor}`}
                   >
-                    <span>{label}</span>
+                    <span>
+                      {selectedLang === "ja" ? labelJA[label] : label}
+                    </span>
                     <span>{stat.base_stat}</span>
                   </div>
                 );
               })}
             </div>
 
-            <p className="font-semibold text-sm mb-1">Abilities</p>
+            <p className="font-semibold text-xl mt-4 mb-2">
+              {selectedLang === "ja" ? `スキル ` : `Abilities`}
+            </p>
             <div className="flex gap-4">
-              {pokemon.abilities.map((item, i) => (
+              {abilitiesLang.map((item, i) => (
                 <button
                   key={i}
                   className="bg-emerald-600 rounded px-6 py-2 font-bold text-white capitalize"
                 >
-                  {item.ability.name}
+                  {selectedLang === "ja" ? japanLang[i].name : item.name}
                 </button>
               ))}
             </div>

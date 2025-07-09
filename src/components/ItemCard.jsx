@@ -1,12 +1,8 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { FaRegBookmark } from "react-icons/fa";
-import { MdDoNotDisturbAlt } from "react-icons/md";
 
-export default function ItemCard({ data }) {
+export default function ItemCard({ data, onClickSave }) {
   const navigate = useNavigate();
-  const [showPopup, setShowPopup] = useState(false);
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -16,12 +12,8 @@ export default function ItemCard({ data }) {
     navigate(`/detail/${data.id}`);
   };
 
-  const togglePopup = () => {
-    setShowPopup((prev) => !prev);
-  };
-
-  const handleSaveToCollection = () => {
-    navigate("/my-pokemon"); // ⬅️ ini akan arahkan ke halaman Favourite.jsx
+  const handleSaveToCollection = (i) => {
+    onClickSave(i);
   };
 
   return (
@@ -52,28 +44,11 @@ export default function ItemCard({ data }) {
             </button>
             <div className="relative">
               <button
-                onClick={togglePopup}
+                onClick={() => handleSaveToCollection(data)}
                 className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
               >
                 <MdOutlinePlaylistAdd size={24} />
               </button>
-
-              {/* Popup */}
-              {showPopup && (
-                <div className="absolute left-0 mt-2 w-96 bg-rose-950 rounded-2xl flex flex-col z-50 shadow-lg">
-                  <button
-                    onClick={handleSaveToCollection}
-                    className="self-stretch h-14 px-6 bg-red-800 rounded-t-2xl flex items-center gap-4 text-white text-lg font-medium hover:bg-red-700 hover:text-white transition-colors"
-                  >
-                    <FaRegBookmark size={24} />
-                    Save to Collection
-                  </button>
-                  <button className="self-stretch h-16 px-6 bg-red-900 rounded-b-2xl flex items-center gap-4 text-white text-lg font-medium hover:bg-red-700 hover:text-white transition-colors">
-                    <MdDoNotDisturbAlt size={26} />
-                    Not Interested
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         </div>

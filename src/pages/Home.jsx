@@ -12,6 +12,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [dataCollectionList, setDataCollectionList] = useState(null);
 
   const limit = 20;
 
@@ -88,7 +89,13 @@ export default function Home() {
           <div>Loading...</div>
         ) : (
           data.map((item, index) => {
-            return <ItemCard key={index} data={item} />;
+            return (
+              <ItemCard
+                key={index}
+                data={item}
+                onClickSave={(i) => setDataCollectionList(i)}
+              />
+            );
           })
         )}
       </div>
@@ -99,6 +106,68 @@ export default function Home() {
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
+
+      {/* modal show collection */}
+      {dataCollectionList && (
+        <div
+          onClick={() => setDataCollectionList(null)}
+          className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm md:max-w-md lg:max-w-lg max-h-[90vh] overflow-y-auto"
+          >
+            <h2 className="text-xl font-bold mb-4 text-gray-800 capitalize">
+              Hero Name : {dataCollectionList?.name}
+            </h2>
+            {/* <p className="text-black">
+              ini di isi dari data collection nya ada apa aja yang dari local
+              storage
+            </p> */}
+
+            {/* untuk input checkbox harus bisa validasi bahwa cek isinya jika sudha lebih dari 6 hero
+             maka tidak bisa di tambhakan ke collection tersebut. checklistnya cuma bisa di 1 nama */}
+            <ul>
+              <li className="flex items-center">
+                <input type="checkbox" />
+                <span className="text-black ml-2">name</span> // dari local
+                storage
+              </li>
+              <li className="flex items-center">
+                <input type="checkbox" />
+                <span className="text-black ml-2">name</span> // dari local
+                storage
+              </li>
+              <li className="flex items-center">
+                <input type="checkbox" />
+                <span className="text-black ml-2">name</span> // dari local
+                storage
+              </li>
+            </ul>
+
+            <div className="flex  justify-between">
+              <button
+                onClick={() => setDataCollectionList(null)}
+                className="mt-6 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => setDataCollectionList(null)}
+                className="mt-6 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-red-600 transition-colors"
+              >
+                New Collection
+              </button>
+              <button
+                onClick={() => setDataCollectionList(null)}
+                className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-red-600 transition-colors"
+              >
+                Save To Collection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ export default function DetailsPages() {
   const [pokemon, setPokemon] = useState(null);
   const [descript, setDescript] = useState("");
   const [evolNames, setEvolNames] = useState([]);
+  const selectedLang = localStorage.getItem("lang") || "en";
 
   useEffect(() => {
     async function getData() {
@@ -24,13 +25,16 @@ export default function DetailsPages() {
       // localstorage
       const lang = localStorage.getItem("lang") || "en";
 
-
       const flavor = dataSpecies.flavor_text_entries;
-      const foundFlavor = flavor.find(item => item.language.name === lang);
-      const descriptLang = foundFlavor ? foundFlavor.flavor_text : "No description found";
+      const foundFlavor = flavor.find((item) => item.language.name === lang);
+      const descriptLang = foundFlavor
+        ? foundFlavor.flavor_text
+        : "No description found";
 
       const nameLang = lang === "ja" ? "ja-Hrkt" : lang;
-      const foundName = dataSpecies.names.find(item => item.language.name === nameLang);
+      const foundName = dataSpecies.names.find(
+        (item) => item.language.name === nameLang
+      );
       const nameLangVer = foundName ? foundName.name : dataSpecies.name;
 
       const evoUrl = dataSpecies.evolution_chain.url;
@@ -45,7 +49,7 @@ export default function DetailsPages() {
       const evol = [evo1, evo2, evo3].filter(Boolean);
 
       setPokemon({ ...dataPokemon, name: nameLangVer });
-      setDescript(descriptLang)
+      setDescript(descriptLang);
       setEvolNames(evol);
     }
     getData();
@@ -63,7 +67,11 @@ export default function DetailsPages() {
       <main className="bg-[url(./assets/bg-detail.png)] bg-cover h-full pt-8">
         <div className="flex flex-col items-center">
           <LanguageSelector />
-          <CardDetail pokemon={pokemon} descript={descript} />
+          <CardDetail
+            pokemon={pokemon}
+            descript={descript}
+            selectedLang={selectedLang}
+          />
         </div>
         <div className="w-full max-w-5xl mx-auto py-10 px-4">
           <h3 className="text-white text-2xl font-bold mb-4">Evolution</h3>
