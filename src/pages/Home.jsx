@@ -70,30 +70,58 @@ export default function Home() {
 
       {/* serachbar */}
       <div className="flex flex-col  justify-center items-center">
-        <img src={logo} alt="logo" className="w-1/2" />
-        <div className="flex justify-center items-center w-1/2 mx-auto pt-6">
-          <div className="bg-white rounded-full border-1 border-gray-500 flex flex-row justify-between p-2 item-center w-full">
+        <img src={logo} alt="logo" className=" w-1/2 lg:w-1/4 " />
+        <div className="flex justify-center items-center w-11/12 lg:w-1/2 mx-auto pt-6">
+          <div className="bg-white rounded-xl border-1 border-gray-500 flex flex-row justify-between p-2 pr-4 item-center w-full">
             <input
               type="text"
-              className="outline-none text-black placeholder:text-black/50"
-              placeholder="search"
+              className="w-full text-lg lg:text-xl px-4 outline-none text-black placeholder:text-black/50"
+              placeholder="Search"
             />
-            <BiSearch className="text-black text-2xl" />
+            <BiSearch className="text-pink-600 font-bold text-4xl" />
           </div>
         </div>
       </div>
 
       {/* Item Card */}
-      <div className="grid grid-cols-4 gap-4 px-12 py-20">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 px-4 lg:px-12 py-8 lg:py-20">
         {loading ? (
           <div>Loading...</div>
         ) : (
           data.map((item, index) => {
+            const typeColors = {
+              fire: "from-orange-500 to-red-600",
+              water: "from-blue-500 to-blue-700",
+              grass: "from-green-500 to-green-700",
+              electric: "from-yellow-400 to-yellow-600",
+              psychic: "from-pink-500 to-pink-700",
+              ice: "from-cyan-400 to-cyan-600",
+              dragon: "from-purple-600 to-purple-800",
+              dark: "from-gray-800 to-gray-950",
+              fairy: "from-pink-400 to-pink-600",
+              normal: "from-gray-400 to-gray-600",
+              fighting: "from-red-700 to-red-900",
+              flying: "from-indigo-400 to-indigo-600",
+              poison: "from-purple-500 to-purple-700",
+              ground: "from-yellow-700 to-yellow-900",
+              rock: "from-yellow-800 to-yellow-950",
+              bug: "from-green-600 to-green-800",
+              ghost: "from-indigo-600 to-indigo-800",
+              steel: "from-gray-500 to-gray-700",
+            };
+
+            const type1 = item.types[0].type.name;
+            const type2 = item.types[1]?.type.name;
+
+            const color1 = typeColors[type1]?.split(" ")[0] || "from-slate-500";
+            const color2 = typeColors[type2]?.split(" ")[1] || "to-slate-400";
+            const bgClass = `bg-gradient-to-br ${color1} ${color2}`;
             return (
               <ItemCard
                 key={index}
                 data={item}
                 onClickSave={(i) => setDataCollectionList(i)}
+                bgClass={bgClass}
               />
             );
           })

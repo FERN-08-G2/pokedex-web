@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 
-export default function ItemCard({ data, onClickSave }) {
+export default function ItemCard({ data, onClickSave, bgClass }) {
   const navigate = useNavigate();
 
   const capitalizeFirstLetter = (string) => {
@@ -17,11 +17,19 @@ export default function ItemCard({ data, onClickSave }) {
   };
 
   return (
-    <div className="relative bg-green-600 p-4 rounded-2xl">
-      <div className="flex justify-between items-center mb-2">
+    <div
+      className={`relative ${bgClass} hover:scale-102 hover:outline-white hover:outline-offset-2 transition-all duration-300 p-4 rounded-2xl outline-2 outline-slate-400 shadow-md shadow-slate-500`}
+    >
+      <div
+        onClick={handleReadMoreClick}
+        className="flex justify-between items-center mb-2"
+      >
         <div className="flex gap-2">
           {data?.types.map((item, index) => (
-            <div key={index} className="bg-emerald-600 rounded-2xl px-1 py-1">
+            <div
+              key={index}
+              className="bg-emerald-600 outline rounded-lg px-3 py-1"
+            >
               {capitalizeFirstLetter(item?.type.name)}
             </div>
           ))}
@@ -29,7 +37,7 @@ export default function ItemCard({ data, onClickSave }) {
         <h1>#{data?.id}</h1>
       </div>
 
-      <div className="flex w-full items-center gap-1">
+      <div className="flex w-full items-center gap-1 ">
         <div className="w-2/3 space-y-4">
           <h1 className="text-4xl font-bold">
             {capitalizeFirstLetter(data?.name)}
