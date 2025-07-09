@@ -64,17 +64,19 @@ export default function DetailsPages() {
   return (
     <>
       <NavbarSec />
-      <main className="bg-[url(./assets/bg-detail.png)] bg-cover h-full pt-8">
+      <main className="bg-[url(./assets/bg-detail.png)] bg-cover h-full pt-2 lg:pt-8">
         <div className="flex flex-col items-center">
-          <LanguageSelector />
+          <div className="flex w-full justify-end px-4 lg:px-74">
+            <LanguageSelector />
+          </div>
           <CardDetail
             pokemon={pokemon}
             descript={descript}
             selectedLang={selectedLang}
           />
         </div>
-        <div className="w-full max-w-5xl mx-auto py-10 px-4">
-          <h3 className="text-white text-2xl font-bold mb-4">Evolution</h3>
+        <div className="w-full px-2 lg:px-70 py-10">
+          <h3 className="text-white text-2xl font-bold mb-4 ml-2">Evolution</h3>
           <EvolDetailCard evolNames={evolNames} />
         </div>
       </main>

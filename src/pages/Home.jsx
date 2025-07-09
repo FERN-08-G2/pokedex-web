@@ -65,7 +65,7 @@ export default function Home() {
   }, [currentPage]);
 
   return (
-    <div className="bg-[url(./assets/bg-detail.png)] bg-cover min-h-screen">
+    <div className="bg-[url(./assets/bg-detail.png)] bg-repeat min-h-screen">
       <NavbarSec />
 
       {/* serachbar */}

@@ -21,13 +21,13 @@ function Logo() {
 function DropdownBtn() {
   const navigate = useNavigate();
   return (
-    <div className="dropdown relative">
+    <div className="dropdown relative ">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
         <HiViewList className="text-white text-2xl" />
       </div>
       <ul
         tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow top-[40px] right-0"
+        className="menu menu-sm dropdown-content bg-rose-800 rounded-box z-1 mt-3 w-52 p-2 shadow top-[40px] right-0"
       >
         <li className="capitalize">
           <a onClick={() => navigate("/")}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaSearch, FaCaretDown } from "react-icons/fa";
 import NavbarSec from "../components/navbar";
+import { useNavigate } from "react-router";
 
 function EvolutionPage() {
   const [generations, setGenerations] = useState([]);
@@ -127,18 +128,6 @@ function EvolutionPage() {
           }
         })
       );
-
-      // const withFavorites = [
-      //   ...favoritePokemon.map((fav) => ({
-      //     ...fav,
-      //     types: ["electric"], // Hardcoded for Pikachu and Charizard
-      //     forms: ["default"],
-      //   })),
-      //   ...detailed.filter(
-      //     (d) => !favoritePokemon.some((f) => f.name === d.name)
-      //   ),
-      // ];
-
       setDetailedList(detailed);
     } catch (err) {
       console.error("Failed to fetch Pokémon details", err);
@@ -160,8 +149,14 @@ function EvolutionPage() {
       .join(" ");
   };
 
+  const navigate = useNavigate();
+
+  const handleNavigate = (id) => {
+    navigate(`/detail/${id}`);
+  };
+
   return (
-    <div className="min-h-screen bg-red-900">
+    <div className="bg-[url(./assets/bg-detail.png)] bg-repeat min-h-screen">
       <NavbarSec />
       <div className=" text-white p-8">
         <h1 className="text-3xl font-medium mb-6">Evolution Pokémon</h1>
@@ -169,12 +164,12 @@ function EvolutionPage() {
         {/* Filter Section */}
         <div className="flex flex-wrap gap-4 mb-6">
           {/* Search Input with icon */}
-          <div className="relative">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <div className="flex items-center w-64 h-12 px-4 gap-2 bg-white rounded-lg text-black ">
+            <FaSearch className=" text-gray-500" />
             <input
               type="text"
               placeholder="Search Pokémon"
-              className="w-64 h-12 pl-10 pr-4 py-2.5 bg-gray-800 rounded-lg text-gray-300"
+              className="plcaeholder:text-gray-600 focus:outline-none"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -184,7 +179,7 @@ function EvolutionPage() {
           <div className="relative">
             <select
               onChange={(e) => setSelectedGen(e.target.value)}
-              className="appearance-none w-64 h-12 px-4 py-3 bg-gray-800 text-gray-300 rounded-lg pr-10"
+              className="appearance-none w-64 h-12 px-4 py-3 bg-white text-black rounded-lg"
             >
               {/* <option value="">Any Generation</option> */}
               {generations.map((gen, index) => (
@@ -200,7 +195,7 @@ function EvolutionPage() {
           <div className="relative">
             <select
               onChange={(e) => setSelectedType(e.target.value)}
-              className="appearance-none w-56 h-12 px-4 py-2.5 bg-gray-800 text-gray-300 rounded-lg pr-10"
+              className="appearance-none w-64 h-12 px-4 py-2.5 bg-white text-black rounded-lg pr-10"
             >
               <option value="">Any Types</option>
               {types.map((type) => (
@@ -226,7 +221,8 @@ function EvolutionPage() {
             return (
               <div
                 key={`${pokemon.id}-${pokemon.name}`}
-                className={`p-3 ${bgClass} rounded-[10px] outline-slate-400 flex justify-between items-center`}
+                onClick={() => handleNavigate(pokemon.id)}
+                className={`p-3 ${bgClass} rounded-[10px] cursor-pointer trasnsition-all duration-300 hover:scale-102 hover:outline-white  outline-slate-400 flex justify-between items-center`}
               >
                 <div className="flex flex-col gap-1">
                   <h2 className="text-xl font-semibold">

@@ -36,23 +36,50 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
     ability.names.find((name) => name.language.name === "ja")
   );
 
+  const typeColors = {
+    fire: "from-orange-500 to-red-600",
+    water: "from-blue-500 to-blue-700",
+    grass: "from-green-500 to-green-700",
+    electric: "from-yellow-400 to-yellow-600",
+    psychic: "from-pink-500 to-pink-700",
+    ice: "from-cyan-400 to-cyan-600",
+    dragon: "from-purple-600 to-purple-800",
+    dark: "from-gray-800 to-gray-950",
+    fairy: "from-pink-400 to-pink-600",
+    normal: "from-gray-400 to-gray-600",
+    fighting: "from-red-700 to-red-900",
+    flying: "from-indigo-400 to-indigo-600",
+    poison: "from-purple-500 to-purple-700",
+    ground: "from-yellow-700 to-yellow-900",
+    rock: "from-yellow-800 to-yellow-950",
+    bug: "from-green-600 to-green-800",
+    ghost: "from-indigo-600 to-indigo-800",
+    steel: "from-gray-500 to-gray-700",
+  };
+
+  const color1 = typeColors[pokemon.types[0]?.type.name] || "from-slate-500";
+  const color2 = typeColors[pokemon.types[1]?.type.name] || "to-slate-400";
+  const bgClass = `bg-gradient-to-br ${color1} ${color2}`;
+
   return (
     <>
       <div className="flex justify-center items-center">
-        <div className="bg-green-600 rounded-2xl p-4 py-8 flex w-[950px]">
-          <div className="w-1/2 flex items-center justify-center">
+        <div
+          className={`rounded-2xl ${bgClass} p-4 py-8 flex w-fit flex-col lg:flex-row mx-4`}
+        >
+          <div className="flex items-center justify-center">
             <img
               src={pokemon.sprites.other["official-artwork"].front_default}
               alt={pokemon.name}
-              className="w-[500px]"
+              className="w-62 lg:w-[500px] "
             />
           </div>
 
-          <div className="flex flex-col justify-center pl-4">
-            <div className="text-sm font-bold">#{pokemon.id}</div>
-            <div className="font-bold text-xl">{pokemon.name}</div>
+          <div className="flex flex-col gap-2  justify-center pl-4">
+            <div className="text-base font-bold">#{pokemon.id}</div>
+            <div className="font-bold text-2xl">{pokemon.name}</div>
 
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-2">
               {pokemon.types.map((type, i) => (
                 <span
                   key={i}
@@ -63,7 +90,7 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
               ))}
             </div>
 
-            <div className="text-xs my-4">{descript}</div>
+            <div className="text-base my-4">{descript}</div>
 
             <div className="grid grid-cols-2 gap-3 mt-2 mb-4 w-full max-w-[400px]">
               <div className="bg-lime-600/70 rounded-md px-3 py-2 flex justify-between items-center">
@@ -180,13 +207,13 @@ export function EvolDetailCard({ evolNames }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-around mt-6 p-2">
+    <div className="flex items-center justify-around mt-4 p-2 lg:gap-40">
       {data.map((item, i) => (
         <div key={i} className="flex flex-col items-center gap-4">
           <img
             src={item.sprites.other["official-artwork"].front_default}
             alt={item.name}
-            className={`w-24 h-24`}
+            className={`w-24 lg:w-72 h-24 lg:h-72`}
           />
           <p className="capitalize">{item.name}</p>
         </div>

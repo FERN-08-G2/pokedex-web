@@ -19,7 +19,7 @@ export default function LanguageSelector() {
         id="lang"
         value={selected}
         onChange={handleChange}
-        className="select"
+        className="select bg-white text-black"
       >
         <option disabled={true}>Choose Language</option>
         <option value={"en"}>English</option>
