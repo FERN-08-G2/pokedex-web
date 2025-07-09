@@ -4,7 +4,7 @@ import { HiViewList } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import input from "daisyui/components/input";
 import { GiRegeneration } from "react-icons/gi";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 function Logo() {
   return (
@@ -52,6 +52,8 @@ function DropdownBtn() {
 
 function NavbarSec() {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <nav className="navbar bg-red-500/50  flex-row px-8">
       <div className="navbar-start">
@@ -60,18 +62,30 @@ function NavbarSec() {
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li className="capitalize text-white text-[16px]">
+          <li
+            className={`capitalize ${
+              location.pathname === "/" ? "bg-rose-800" : ""
+            } text-white text-[16px] rounded-2xl`}
+          >
             <a onClick={() => navigate("/")}>
               <AiFillHome /> home
             </a>
           </li>
-          <li className="capitalize text-white text-[16px]">
+          <li
+            className={`capitalize ${
+              location.pathname === "/my-pokemon" ? "bg-rose-800" : ""
+            } text-white text-[16px] rounded-2xl`}
+          >
             <a onClick={() => navigate("/my-pokemon")}>
               <MdCatchingPokemon />
               My pokemon
             </a>
           </li>
-          <li className="capitalize text-white text-[16px]">
+          <li
+            className={`capitalize ${
+              location.pathname === "/evolve" ? "bg-rose-800" : ""
+            } text-white text-[16px] rounded-2xl`}
+          >
             <a onClick={() => navigate("/evolve")}>
               <GiRegeneration /> generation detail
             </a>
