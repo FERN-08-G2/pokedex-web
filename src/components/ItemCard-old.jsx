@@ -2,7 +2,7 @@ import React, { use } from "react";
 import { useNavigate } from "react-router";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 
-export default function ItemCard({ data }) {
+export default function ItemCardOld({ data }) {
   const navigate = useNavigate();
 
   const capilatizeFirstLetter = (string) => {
