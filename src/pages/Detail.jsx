@@ -4,6 +4,7 @@ import { EvolDetailCard } from "../components/CardDetail";
 import { data, useParams } from "react-router";
 import axios from "axios";
 import NavbarSec from "../components/navbar";
+import LanguageSelector from "../components/LanguageSelector";
 
 export default function DetailsPages() {
   const { id } = useParams();
@@ -20,10 +21,17 @@ export default function DetailsPages() {
 
       const resSpecies = await fetch(dataPokemon.species.url);
       const dataSpecies = await resSpecies.json();
+      // localstorage
+      const lang = localStorage.getItem("lang") || "en";
+
 
       const flavor = dataSpecies.flavor_text_entries;
-      const foundFlavor = flavor.find((item) => item.language.name === "en");
-      const descriptEn = foundFlavor ? foundFlavor.flavor_text : "";
+      const foundFlavor = flavor.find(item => item.language.name === lang);
+      const descriptLang = foundFlavor ? foundFlavor.flavor_text : "No description found";
+
+      const nameLang = lang === "ja" ? "ja-Hrkt" : lang;
+      const foundName = dataSpecies.names.find(item => item.language.name === nameLang);
+      const nameLangVer = foundName ? foundName.name : dataSpecies.name;
 
       const evoUrl = dataSpecies.evolution_chain.url;
       const resEvo = await fetch(evoUrl);
@@ -36,8 +44,8 @@ export default function DetailsPages() {
 
       const evol = [evo1, evo2, evo3].filter(Boolean);
 
-      setPokemon(dataPokemon);
-      setDescript(descriptEn);
+      setPokemon({ ...dataPokemon, name: nameLangVer });
+      setDescript(descriptLang)
       setEvolNames(evol);
     }
     getData();
@@ -54,6 +62,7 @@ export default function DetailsPages() {
       <NavbarSec />
       <main className="bg-[url(./assets/bg-detail.png)] bg-cover h-full pt-8">
         <div className="flex flex-col items-center">
+          <LanguageSelector />
           <CardDetail pokemon={pokemon} descript={descript} />
         </div>
         <div className="w-full max-w-5xl mx-auto py-10 px-4">
