@@ -1,7 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavbarSec from "../components/navbar";
 
+
+
+
 export default function Favourite() {
+  const [favorites, setFavorites] = useState([]);
+  useEffect(() => {
+    const save = localStorage.getItem("favorites");
+    if (save) {
+      setFavorites(JSON.parse(save));
+    }
+  }, []);
+
+  const handleDelete = (id) => {
+    const save = localStorage.getItem("favorites");
+    if (!save) return;
+
+    const data = JSON.parse(save);
+    const filtered = data.filter(item => item.id !== id);
+    localStorage.setItem("favorites", JSON.stringify(filtered));
+    setFavorites(filtered);
+  };
+
+  const [collections, setCollections] = useState([]);
+  useEffect(() => {
+    const saved = localStorage.getItem("collections");
+    if (saved) {
+      setCollections(JSON.parse(saved));
+    }
+  }, []);
+
+const handleDeleteFromCollection = (collectionName, pokemonId) => {
+  const saved = localStorage.getItem("collections");
+  if (!saved) return;
+
+  const collections = JSON.parse(saved);
+  const updated = collections.map((col) => {
+    if (col.name === collectionName) {
+      return {
+        ...col,
+        pokemons: col.pokemons.filter((p) => p.id !== pokemonId),
+      };
+    }
+    return col;
+  });
+
+  localStorage.setItem("collections", JSON.stringify(updated));
+  setCollections(updated);
+};
+
   return (
     <div>
       <NavbarSec />
@@ -58,30 +106,145 @@ export default function Favourite() {
 
             {/* SECTION 1 */}
             <div className="flex flex-col gap-5">
-              {/* Header Koleksi */}
-              <div className="flex justify-between items-end">
-                <div className="flex items-center gap-3">
-                  <img
-                    className="w-12 h-12 rounded-full"
-                    src="https://placehold.co/48x48"
-                    alt="Profile Dion"
-                  />
-                  <div className="flex flex-col gap-0.5">
-                    <div className="text-white text-base">Dion</div>
-                    <div className="text-white text-2xl font-bold">
-                      New Collection Bulbasaur
+              <div className="flex flex-wrap gap-6">
+                {favorites.length === 0 && (
+                  <p className="text-white text-base capitalize">no collection</p>
+                )}
+                {favorites.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="w-80 bg-stone-500 rounded-[20px] shadow-md p-4 flex flex-col gap-2"
+                  >
+                    <img
+                      className="w-32 h-28"
+                      src={item.sprites?.other["official-artwork"].front_default || ""}
+                      alt={item.name}
+                    />
+                    <div className="text-white text-2xl font-bold capitalize">
+                      {item.name}
+                    </div>
+                    <div className="text-white text-base font-bold">#{item.id}</div>
+                    <p className="text-white text-xs">
+                      {item.description || "No Description Available"}
+                    </p>
+                    <div className="flex gap-2 mt-2">
+                      <span className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
+                        Grass
+                      </span>
+                      <span className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
+                        Poison
+                      </span>
+                      {item.types?.map((typeObj, i) => (
+                        <span key={i} className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
+                          {typeObj.type.name}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </div>
-                <div className="flex gap-2">
-                  <div className="w-10 h-10 rotate-180 bg-zinc-300 rounded-lg" />
-                  <div className="w-10 h-10 bg-zinc-300 rounded-lg" />
-                </div>
+                ))}
+                <button
+                  onClick={() => handleDeleteFromCollection(col.name, item.id)}
+                  className="bg-red-500 px-3 py-1.5 rounded text-xs text-white mt-2"
+                >
+                  Delete
+                </button>
+              </div>
+              {/* Header Koleksi */}
+              <div className="flex flex-col gap-4">
+                {collections.map((col, idx) => (
+                  <div
+                    key={idx}
+                    className="flex justify-between items-end"
+                  >
+                    <div className="flex items-center gap-3">
+                      <img
+                        className="w-12 h-12 rounded-full"
+                        src="https://placehold.co/48x48"
+                        alt={`Profile ${col.name}`}
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <div className="text-white text-base">Dion</div>
+                        <div className="text-white text-2xl font-bold">
+                          {col.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="w-10 h-10 rotate-180 bg-zinc-300 rounded-lg" />
+                      <div className="w-10 h-10 bg-zinc-300 rounded-lg" />
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Card Row */}
-              <div className="flex gap-9 overflow-hidden">
-                {[1, 2].map((_, idx) => (
+              {collections.map((col, idx) => (
+                <div key={idx} className="flex flex-col gap-4">
+                  {/* HEADER COLLECTION */}
+                  <div className="flex justify-between items-end">
+                    <div className="flex items-center gap-3">
+                      <img
+                        className="w-12 h-12 rounded-full"
+                        src="https://placehold.co/48x48"
+                        alt={`Profile ${col.name}`}
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <div className="text-white text-base">Dion</div>
+                        <div className="text-white text-2xl font-bold">
+                          {col.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="w-10 h-10 rotate-180 bg-zinc-300 rounded-lg" />
+                      <div className="w-10 h-10 bg-zinc-300 rounded-lg" />
+                    </div>
+                  </div>
+
+                  {/* POKEMON CARDS */}
+                  <div className="flex gap-9 overflow-hidden">
+                    {col.pokemons.length === 0 && (
+                      <p className="text-white text-base">No Pokemons in this collection.</p>
+                    )}
+
+                    {col.pokemons.map((item, i) => (
+                      <div key={i} className="w-80 bg-stone-500 rounded-[20px] shadow-md p-4 flex flex-col gap-2">
+                        <img
+                          className="w-32 h-28"
+                          src={item.sprites?.other["official-artwork"].front_default || ""}
+                          alt={item.name}
+                        />
+                        <div className="text-white text-2xl font-bold capitalize">
+                          {item.name}
+                        </div>
+                        <div className="text-white text-base font-bold">
+                          #{item.id}
+                        </div>
+                        <p className="text-white text-xs">
+                          {item.description || "No Description Available"}
+                        </p>
+                        <div className="flex gap-2 mt-2">
+                          {item.types?.map((typeObj, j) => (
+                            <span key={j} className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
+                              {typeObj.type.name}
+                            </span>
+                          ))}
+                        </div>
+                        <button
+                          onClick={() => handleDeleteFromCollection(col.name, item.id)}
+                          className="bg-red-500 px-3 py-1.5 rounded text-xs text-white mt-2"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+
+              {/* Ika Punya */}
+              {/* {[1, 2].map((_, idx) => (
                   <div
                     key={idx}
                     className="w-80 bg-stone-500 rounded-[20px] shadow-md p-4 flex flex-col gap-2"
@@ -108,55 +271,60 @@ export default function Favourite() {
                       </span>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                ))} */}
 
-            {/* SECTION 2 */}
-            <div className="flex flex-col gap-5">
-              {/* Header Koleksi */}
-              <div className="flex justify-between items-end">
-                <div className="flex items-center gap-3">
-                  <img
-                    className="w-12 h-12 rounded-full"
-                    src=""
-                    alt="Profile User"
-                  />
-                  <div className="text-white text-3xl font-bold">
-                    Collection Pokemon Dragon
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <div className="w-10 h-10 rotate-180 bg-zinc-300 rounded-lg" />
-                  <div className="w-10 h-10 bg-zinc-300 rounded-lg" />
-                </div>
-              </div>
+              {/* Old Code */}
 
-              {/* Card Row */}
-              <div className="flex gap-9 overflow-hidden">
-                {[1, 2].map((_, idx) => (
-                  <div
-                    key={idx}
-                    className="w-80 bg-stone-500 rounded-[20px] shadow-md p-4 flex flex-col gap-2"
-                  >
-                    <div className="text-white text-2xl font-bold">
-                      Bulbasaur
-                    </div>
-                    <div className="text-white text-base font-bold">#001</div>
-                    <p className="text-white text-xs">
-                      A strange seed was planted on its back at birth. The plant
-                      sprouts and grows with this Pokémon.
-                    </p>
-                    <div className="flex gap-2 mt-2">
-                      <span className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
-                        Grass
-                      </span>
-                      <span className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
-                        Poison
-                      </span>
+
+              {/* try code */}
+
+
+              {/* SECTION 2 */}
+              <div className="flex flex-col gap-5">
+                {/* Header Koleksi */}
+                <div className="flex justify-between items-end">
+                  <div className="flex items-center gap-3">
+                    <img
+                      className="w-12 h-12 rounded-full"
+                      src=""
+                      alt="Profile User"
+                    />
+                    <div className="text-white text-3xl font-bold">
+                      Collection Pokemon Dragon
                     </div>
                   </div>
-                ))}
+                  <div className="flex gap-2">
+                    <div className="w-10 h-10 rotate-180 bg-zinc-300 rounded-lg" />
+                    <div className="w-10 h-10 bg-zinc-300 rounded-lg" />
+                  </div>
+                </div>
+
+                {/* Card Row */}
+                <div className="flex gap-9 overflow-hidden">
+                  {[1, 2].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="w-80 bg-stone-500 rounded-[20px] shadow-md p-4 flex flex-col gap-2"
+                    >
+                      <div className="text-white text-2xl font-bold">
+                        Bulbasaur
+                      </div>
+                      <div className="text-white text-base font-bold">#001</div>
+                      <p className="text-white text-xs">
+                        A strange seed was planted on its back at birth. The plant
+                        sprouts and grows with this Pokémon.
+                      </p>
+                      <div className="flex gap-2 mt-2">
+                        <span className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
+                          Grass
+                        </span>
+                        <span className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium">
+                          Poison
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

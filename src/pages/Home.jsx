@@ -14,6 +14,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [dataCollectionList, setDataCollectionList] = useState(null);
 
+
   const limit = 20;
 
   const getData = async (page = 1) => {
@@ -64,6 +65,7 @@ export default function Home() {
     getData(currentPage);
   }, [currentPage]);
 
+
   return (
     <div className="bg-[url(./assets/bg-detail.png)] bg-cover min-h-screen">
       <NavbarSec />
@@ -108,7 +110,9 @@ export default function Home() {
       />
 
       {/* modal show collection */}
-      {dataCollectionList && (
+
+      {/* dennis codes */}
+      {/* {dataCollectionList && (
         <div
           onClick={() => setDataCollectionList(null)}
           className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
@@ -120,14 +124,16 @@ export default function Home() {
             <h2 className="text-xl font-bold mb-4 text-gray-800 capitalize">
               Hero Name : {dataCollectionList?.name}
             </h2>
-            {/* <p className="text-black">
+
+            {/* akan di hapus */}
+      {/* <p className="text-black">
               ini di isi dari data collection nya ada apa aja yang dari local
               storage
             </p> */}
 
-            {/* untuk input checkbox harus bisa validasi bahwa cek isinya jika sudha lebih dari 6 hero
+      {/* untuk input checkbox harus bisa validasi bahwa cek isinya jika sudha lebih dari 6 hero
              maka tidak bisa di tambhakan ke collection tersebut. checklistnya cuma bisa di 1 nama */}
-            <ul>
+      {/* <ul>
               <li className="flex items-center">
                 <input type="checkbox" />
                 <span className="text-black ml-2">name</span> // dari local
@@ -166,8 +172,12 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </div>
-      )}
+        </div> 
+      )} */}
+
+      {/* try new codes */}
+      
+
     </div>
   );
 }
