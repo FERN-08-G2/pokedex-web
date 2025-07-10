@@ -146,56 +146,6 @@ export default function Favourite() {
               </span>
             </div>
 
-            {/* SECTION 1 - FAVORITES */}
-            {/* <div className="flex flex-wrap gap-6">
-              {favorites.length === 0 ? (
-                <p className="text-white text-base capitalize">
-                  no collection
-                </p>
-              ) : (
-                favorites.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="w-80 bg-stone-500 rounded-[20px] shadow-md p-4 flex flex-col gap-2"
-                  >
-                    <img
-                      className="w-32 h-28"
-                      src={
-                        item.sprites?.other["official-artwork"].front_default ||
-                        ""
-                      }
-                      alt={item.name}
-                    />
-                    <div className="text-white text-2xl font-bold capitalize">
-                      {item.name}
-                    </div>
-                    <div className="text-white text-base font-bold">
-                      #{item.id}
-                    </div>
-                    <p className="text-white text-xs">
-                      {item.description || "No Description Available"}
-                    </p>
-                    <div className="flex gap-2 mt-2">
-                      {item.types?.map((typeObj, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1.5 bg-lime-300 rounded-full text-white text-[9px] font-medium"
-                        >
-                          {typeObj.type.name}
-                        </span>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="bg-red-500 px-3 py-1.5 rounded text-xs text-white mt-2"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                ))
-              )}
-            </div> */}
-
             {/* SECTION 2 - COLLECTIONS */}
             {collections.map((col, idx) => (
               <div key={idx} className="flex flex-col gap-5">

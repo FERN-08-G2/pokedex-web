@@ -204,7 +204,7 @@ useEffect(() => {
         Hero Name : {dataCollectionList?.name}
       </h2>
 
-      {/* === CHECKBOX COLLECTIONS === */}
+
       <div className="mb-4">
         <label className="text-gray-700 text-sm font-semibold mb-2 block">
           Choose collections to save:
@@ -246,7 +246,7 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* === LIST FAVORITES === */}
+
       <ul className="space-y-2">
         {JSON.parse(localStorage.getItem("favorites") || "[]").map(
           (pokemon) => (
