@@ -57,8 +57,11 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
     steel: "from-gray-500 to-gray-700",
   };
 
-  const color1 = typeColors[pokemon.types[0]?.type.name] || "from-slate-500";
-  const color2 = typeColors[pokemon.types[1]?.type.name] || "to-slate-400";
+  const type1 = pokemon.types[0]?.type.name;
+  const type2 = pokemon.types[1]?.type.name;
+
+  const color1 = typeColors[type1]?.split(" ")[0] || "from-slate-500";
+  const color2 = typeColors[type2]?.split(" ")[1] || "to-slate-400";
   const bgClass = `bg-gradient-to-br ${color1} ${color2}`;
 
   return (

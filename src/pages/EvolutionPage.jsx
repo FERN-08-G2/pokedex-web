@@ -12,6 +12,7 @@ function EvolutionPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
   const [detailedList, setDetailedList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const romanNumerals = [
     "I",
@@ -71,27 +72,34 @@ function EvolutionPage() {
   }, [pokemonList]);
 
   const fetchGenerations = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("https://pokeapi.co/api/v2/generation/");
       setGenerations(res.data.results);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.error("Failed to fetch generations", err);
     }
   };
 
   const fetchTypes = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("https://pokeapi.co/api/v2/type/");
       const filteredTypes = res.data.results.filter(
         (type) => !["shadow", "unknown"].includes(type.name)
       );
       setTypes(filteredTypes);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.error("Failed to fetch types", err);
     }
   };
 
   const fetchPokemonByGeneration = async (genName) => {
+    setLoading(true);
     try {
       const res = await axios.get(
         `https://pokeapi.co/api/v2/generation/${genName}`
@@ -105,12 +113,15 @@ function EvolutionPage() {
         return { name: p.name, id };
       });
       setPokemonList(mapped);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.error("Failed to fetch Pokémon by generation", err);
     }
   };
 
   const fetchDetailedList = async () => {
+    setLoading(true);
     try {
       const detailed = await Promise.all(
         pokemonList.map(async (p) => {
@@ -129,7 +140,9 @@ function EvolutionPage() {
         })
       );
       setDetailedList(detailed);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.error("Failed to fetch Pokémon details", err);
     }
   };
@@ -210,47 +223,55 @@ function EvolutionPage() {
 
         {/* Card List */}
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filteredList.map((pokemon) => {
-            const type1 = pokemon.types?.[0];
-            const type2 = pokemon.types?.[1];
-
-            const color1 = typeColors[type1]?.split(" ")[0] || "from-slate-500";
-            const color2 = typeColors[type2]?.split(" ")[1] || "to-slate-400";
-            const bgClass = `bg-gradient-to-br ${color1} ${color2}`;
-
-            return (
-              <div
-                key={`${pokemon.id}-${pokemon.name}`}
-                onClick={() => handleNavigate(pokemon.id)}
-                className={`p-3 ${bgClass} rounded-[10px] cursor-pointer trasnsition-all duration-300 hover:scale-102 hover:outline-white  outline-slate-400 flex justify-between items-center`}
-              >
-                <div className="flex flex-col gap-1">
-                  <h2 className="text-xl font-semibold">
-                    {formatKebabCase(pokemon.name)}
-                  </h2>
-                  <p className="text-slate-200">
-                    #{pokemon.id.padStart?.(3, "0") ?? pokemon.id}
-                  </p>
-                  <p className="text-white text-sm">
-                    {pokemon.types?.map(formatKebabCase).join(", ") || "-"}
-                  </p>
-                  <p className="text-white text-sm">
-                    {pokemon.forms?.map(formatKebabCase).join(", ") || "-"}
-                  </p>
-                </div>
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-                  alt={pokemon.name}
-                  className="w-24 h-24 object-contain"
-                />
-              </div>
-            );
-          })}
-
-          {filteredList.length === 0 && (
-            <p className="text-gray-400 col-span-full">
+          {loading ? (
+            <div className="col-span-full text-center mt-14">
+              <span className="loading loading-bars loading-xl"></span>
+            </div>
+          ) : filteredList.length === 0 ? (
+            <div className="col-span-full text-center text-white text-lg">
               No Pokémon found for selected filter.
-            </p>
+            </div>
+          ) : (
+            filteredList.map((pokemon) => {
+              const type1 = pokemon.types?.[0];
+              const type2 = pokemon.types?.[1];
+
+              const color1 =
+                typeColors[type1]?.split(" ")[0] || "from-slate-500";
+              const color2 = typeColors[type2]?.split(" ")[1] || "to-slate-400";
+              const bgClass = `bg-gradient-to-br ${color1} ${color2}`;
+
+              return (
+                <div
+                  key={`${pokemon.id}-${pokemon.name}`}
+                  onClick={() => handleNavigate(pokemon.id)}
+                  className={`p-3 ${bgClass} rounded-[10px] cursor-pointer trasnsition-all duration-300 hover:scale-102 hover:outline-white  outline-slate-400 flex justify-between items-center`}
+                >
+                  <div className="flex flex-col gap-1">
+                    <h2 className="text-xl font-semibold">
+                      {formatKebabCase(pokemon.name)}
+                    </h2>
+                    <p className="text-slate-200">
+                      #{pokemon.id.padStart?.(3, "0") ?? pokemon.id}
+                    </p>
+                    <p className="text-white text-sm">
+                      {pokemon.types?.map(formatKebabCase).join(", ") || "-"}
+                    </p>
+                    <p className="text-white text-sm">
+                      {pokemon.forms
+                        ?.slice(0, 3)
+                        ?.map(formatKebabCase)
+                        .join(", ") || "-"}
+                    </p>
+                  </div>
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+                    alt={pokemon.name}
+                    className="w-24 h-24 object-contain"
+                  />
+                </div>
+              );
+            })
           )}
         </div>
       </div>
