@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { FaTrashCan } from "react-icons/fa6";
 
-export default function ItemCard({ data, onClickSave, bgClass }) {
+export default function ItemCard({
+  data,
+  onClickSave,
+  bgClass,
+  isFavorite = false,
+}) {
   const navigate = useNavigate();
 
   const capitalizeFirstLetter = (string) => {
@@ -43,21 +49,24 @@ export default function ItemCard({ data, onClickSave, bgClass }) {
             {capitalizeFirstLetter(data?.name)}
           </h1>
           <p>{data?.description}</p>
-          <div className="flex gap-4 relative">
+          <div className="flex gap-4 items-center">
             <button
               onClick={handleReadMoreClick}
               className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
             >
               Read More
             </button>
-            <div className="relative">
-              <button
-                onClick={() => handleSaveToCollection(data)}
-                className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
-              >
+
+            <button
+              onClick={() => handleSaveToCollection(data)}
+              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
+            >
+              {isFavorite ? (
+                <FaTrashCan size={22} />
+              ) : (
                 <MdOutlinePlaylistAdd size={24} />
-              </button>
-            </div>
+              )}
+            </button>
           </div>
         </div>
         <div className="w-1/3 flex justify-end">

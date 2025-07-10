@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import DetailsPages from "./pages/Detail";
 import EvolutionPage from "./pages/EvolutionPage";
 import Favourite from "./pages/Favourite";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/evolve" element={<EvolutionPage />} />
         <Route path="/my-pokemon" element={<Favourite />} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }

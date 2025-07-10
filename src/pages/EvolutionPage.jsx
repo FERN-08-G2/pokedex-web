@@ -159,7 +159,7 @@ function EvolutionPage() {
     <div className="bg-[url(./assets/bg-detail.png)] bg-repeat min-h-screen">
       <NavbarSec />
       <div className=" text-white p-8">
-        <h1 className="text-3xl font-medium mb-6">Evolution Pokémon</h1>
+        <h1 className="text-3xl font-medium mb-6">Generation Pokémon</h1>
 
         {/* Filter Section */}
         <div className="flex flex-wrap gap-4 mb-6">

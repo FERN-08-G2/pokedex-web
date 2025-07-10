@@ -53,7 +53,6 @@ function DropdownBtn() {
 function NavbarSec() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <nav className="navbar bg-red-500/50  flex-row px-8">
       <div className="navbar-start">
