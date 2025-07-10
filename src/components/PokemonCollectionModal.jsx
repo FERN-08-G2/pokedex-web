@@ -7,21 +7,27 @@ function PokemonCollectionModal({ dataCollectionList, setDataCollectionList }) {
   const [showInputCollection, setShowInputCollection] = useState(false);
   const [titleNewCollection, setTitleNewCollection] = useState("");
 
-  useEffect(() => {
-    loadCollectionsFromLocalStorage();
-  }, []);
+  // console.log(dataCollectionList.name);
+  console.log(collections);
 
   const loadCollectionsFromLocalStorage = () => {
     try {
       const storedCollections = localStorage.getItem("pokemonCollections");
       if (storedCollections) {
-        setCollections(JSON.parse(storedCollections));
+        const parsedCollections = JSON.parse(storedCollections);
+        setCollections(parsedCollections);
       }
     } catch (error) {
       console.error("Gagal memuat koleksi dari localStorage:", error);
       setCollections([]);
     }
   };
+
+  useEffect(() => {
+    if (dataCollectionList) {
+      loadCollectionsFromLocalStorage();
+    }
+  }, [dataCollectionList, setDataCollectionList]);
 
   const saveCollectionsToLocalStorage = (currentCollections) => {
     try {
@@ -40,12 +46,12 @@ function PokemonCollectionModal({ dataCollectionList, setDataCollectionList }) {
 
   const savePokemonToCollection = () => {
     if (!dataCollectionList || !dataCollectionList.name) {
-      alert("Tidak ada Pokémon yang dipilih untuk ditambahkan!");
+      toast.error("Tidak ada Pokémon yang dipilih untuk ditambahkan!");
       return;
     }
 
-    if (!selectedCollection) {
-      toast.error("Pilih salah satu koleksi terlebih dahulu!");
+    if (selectedCollection === null) {
+      toast.error("Choose one of the collections first!");
       return;
     }
 
@@ -58,8 +64,10 @@ function PokemonCollectionModal({ dataCollectionList, setDataCollectionList }) {
       return;
     }
 
-    const isPokemonAlreadyInCollection = collectionToUpdate.pokemons.some(
-      (pokemon) => pokemon.name === dataCollectionList.name
+    const pokemonToAddName = dataCollectionList.name;
+
+    const isPokemonAlreadyInCollection = collectionToUpdate.pokemons.find(
+      (pokemon) => pokemon.name === pokemonToAddName
     );
 
     if (isPokemonAlreadyInCollection) {
@@ -186,9 +194,8 @@ function PokemonCollectionModal({ dataCollectionList, setDataCollectionList }) {
               Create New Collection
             </button>
             <button
-              onClick={savePokemonToCollection}
+              onClick={() => savePokemonToCollection()}
               className="mt-6 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors flex-grow"
-              disabled={!selectedCollection}
             >
               Save to Collection
             </button>

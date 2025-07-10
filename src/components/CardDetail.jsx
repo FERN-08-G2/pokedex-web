@@ -7,6 +7,7 @@ import PokemonCollectionModal from "./PokemonCollectionModal";
 export default function CardDetail({ pokemon, descript, selectedLang }) {
   const [abilitiesLang, setAbilitiesLang] = useState([]);
   const [selectedData, setSelectedData] = useState(null);
+  const [savedPokemon, setSavedPokemon] = useState(null);
   const statLabels = {
     hp: "HP",
     attack: "ATK",
@@ -71,6 +72,16 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
   const handleSaveToCollection = (data) => {
     setSelectedData(data);
   };
+
+  useEffect(() => {
+    const data = localStorage.getItem("pokemonCollections");
+    if (data) {
+      const parsedData = JSON.parse(data);
+      setSavedPokemon(parsedData);
+    }
+  }, []);
+
+  console.log(savedPokemon);
 
   return (
     <>

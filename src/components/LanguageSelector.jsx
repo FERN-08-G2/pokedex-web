@@ -1,16 +1,11 @@
 import { useState } from "react";
 
-export default function LanguageSelector() {
-  const [selected, setSelected] = useState(
-    localStorage.getItem("lang") || "en"
-  );
+export default function LanguageSelector({ selectedLang }) {
+  const [selected, setSelected] = useState("en");
 
   function handleChange(e) {
-    const lang = e.target.value;
-
-    setSelected(lang);
-    localStorage.setItem("lang", lang);
-    window.location.reload();
+    setSelected(e);
+    selectedLang(e);
   }
 
   return (
@@ -18,7 +13,7 @@ export default function LanguageSelector() {
       <select
         id="lang"
         value={selected}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e.target.value)}
         className="select bg-white text-black"
       >
         <option disabled={true}>Choose Language</option>

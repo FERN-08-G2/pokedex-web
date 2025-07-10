@@ -11,7 +11,7 @@ export default function DetailsPages() {
   const [pokemon, setPokemon] = useState(null);
   const [descript, setDescript] = useState("");
   const [evolNames, setEvolNames] = useState([]);
-  const selectedLang = localStorage.getItem("lang") || "en";
+  const [selectedLang, setSelectedLang] = useState("en");
 
   useEffect(() => {
     async function getData() {
@@ -22,8 +22,8 @@ export default function DetailsPages() {
 
       const resSpecies = await fetch(dataPokemon.species.url);
       const dataSpecies = await resSpecies.json();
-      // localstorage
-      const lang = localStorage.getItem("lang") || "en";
+
+      const lang = selectedLang;
 
       const flavor = dataSpecies.flavor_text_entries;
       const foundFlavor = flavor.find((item) => item.language.name === lang);
@@ -53,7 +53,7 @@ export default function DetailsPages() {
       setEvolNames(evol);
     }
     getData();
-  }, []);
+  }, [selectedLang]);
 
   if (!pokemon)
     return (
@@ -66,7 +66,7 @@ export default function DetailsPages() {
       <NavbarSec />
       <div className="flex flex-col items-center">
         <div className="flex w-full justify-end px-4 lg:px-74">
-          <LanguageSelector />
+          <LanguageSelector selectedLang={(i) => setSelectedLang(i)} />
         </div>
         <CardDetail
           pokemon={pokemon}
