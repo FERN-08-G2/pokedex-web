@@ -57,29 +57,27 @@ export default function DetailsPages() {
 
   if (!pokemon)
     return (
-      <>
-        <div>loading...</div>
-      </>
+      <div className="col-span-full text-center">
+        <span className="loading loading-bars loading-xl"></span>
+      </div>
     );
   return (
-    <>
+    <main className="bg-[url(./assets/bg-detail.png)] bg-cover h-full ">
       <NavbarSec />
-      <main className="bg-[url(./assets/bg-detail.png)] bg-cover h-full pt-2 lg:pt-8">
-        <div className="flex flex-col items-center">
-          <div className="flex w-full justify-end px-4 lg:px-74">
-            <LanguageSelector />
-          </div>
-          <CardDetail
-            pokemon={pokemon}
-            descript={descript}
-            selectedLang={selectedLang}
-          />
+      <div className="flex flex-col items-center">
+        <div className="flex w-full justify-end px-4 lg:px-74">
+          <LanguageSelector />
         </div>
-        <div className="w-full px-2 lg:px-70 py-10">
-          <h3 className="text-white text-2xl font-bold mb-4 ml-2">Evolution</h3>
-          <EvolDetailCard evolNames={evolNames} />
-        </div>
-      </main>
-    </>
+        <CardDetail
+          pokemon={pokemon}
+          descript={descript}
+          selectedLang={selectedLang}
+        />
+      </div>
+      <div className="w-full px-2 lg:px-70 py-10">
+        <h3 className="text-white text-2xl font-bold mb-4 ml-2">Evolution</h3>
+        <EvolDetailCard evolNames={evolNames} />
+      </div>
+    </main>
   );
 }

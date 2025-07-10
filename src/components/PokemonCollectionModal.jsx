@@ -7,8 +7,6 @@ function PokemonCollectionModal({ dataCollectionList, setDataCollectionList }) {
   const [showInputCollection, setShowInputCollection] = useState(false);
   const [titleNewCollection, setTitleNewCollection] = useState("");
 
-  console.log(dataCollectionList);
-
   useEffect(() => {
     loadCollectionsFromLocalStorage();
   }, []);

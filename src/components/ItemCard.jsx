@@ -48,7 +48,7 @@ export default function ItemCard({
           <h1 className="text-4xl font-bold">
             {capitalizeFirstLetter(data?.name)}
           </h1>
-          <p>{data?.description}</p>
+          {isFavorite ? <div className="h-8" /> : <p>{data?.description}</p>}
           <div className="flex gap-4 items-center">
             <button
               onClick={handleReadMoreClick}

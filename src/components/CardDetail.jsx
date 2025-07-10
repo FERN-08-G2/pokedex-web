@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa6";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
+import PokemonCollectionModal from "./PokemonCollectionModal";
 
 export default function CardDetail({ pokemon, descript, selectedLang }) {
   const [abilitiesLang, setAbilitiesLang] = useState([]);
+  const [selectedData, setSelectedData] = useState(null);
   const statLabels = {
     hp: "HP",
     attack: "ATK",
@@ -63,6 +67,10 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
   const color1 = typeColors[type1]?.split(" ")[0] || "from-slate-500";
   const color2 = typeColors[type2]?.split(" ")[1] || "to-slate-400";
   const bgClass = `bg-gradient-to-br ${color1} ${color2}`;
+
+  const handleSaveToCollection = (data) => {
+    setSelectedData(data);
+  };
 
   return (
     <>
@@ -173,9 +181,25 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
                 </button>
               ))}
             </div>
+
+            <button
+              onClick={() => handleSaveToCollection(pokemon)}
+              className="flex w-1/2 text-black transition-all duration-300 gap-2 justify-center py-2 rounded-lg cursor-pointer hover:bg-white/70 items-center mt-4 bg-white/50"
+            >
+              <MdOutlinePlaylistAdd size={24} />
+              <p className="">
+                {selectedLang === "ja" ? `保存` : `Save To Your Collection`}
+              </p>
+            </button>
           </div>
         </div>
       </div>
+      {selectedData && (
+        <PokemonCollectionModal
+          dataCollectionList={selectedData}
+          setDataCollectionList={setSelectedData}
+        />
+      )}
     </>
   );
 }
