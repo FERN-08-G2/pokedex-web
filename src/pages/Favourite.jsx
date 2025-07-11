@@ -148,7 +148,7 @@ function CollectionPage() {
         <div className="w-full h-full flex flex-col lg:flex-row justify-center items-center lg:items-start mt-4 ">
           {/* Tombol untuk membuka sidebar di mobile */}
           <button
-            className="lg:hidden fixed top-20 left-4 z-40 p-2 bg-red-600 text-white rounded-md"
+            className="lg:hidden fixed top-17 left-4 z-40 p-2 bg-red-600 text-white rounded-md"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           >
             {isSidebarOpen ? "Tutup Koleksi" : "Koleksi Saya"}
@@ -175,7 +175,7 @@ function CollectionPage() {
               Koleksi Saya
             </h3>
             {/* Playlist Items */}
-            <div className="w-full px-4 lg:w-40 lg:h-44 flex flex-col lg:flex-row gap-2.5">
+            <div className="w-full  px-4 lg:w-40 lg:h-44 flex flex-col lg:flex-row gap-2.5">
               <div className="flex flex-col items-start lg:items-end gap-2 w-full">
                 {dataCollectionPokemon.length > 0 ? (
                   dataCollectionPokemon.map((item, i) => (
@@ -211,16 +211,12 @@ function CollectionPage() {
           </div>
 
           {/* Konten Koleksi */}
-          <div className="w-full lg:w-[1112px] flex flex-col gap-12 px-4 lg:px-0 mt-20 lg:mt-0">
+          <div className="w-full lg:w-4xl flex flex-col gap-12 px-4 lg:px-0 ">
             <div className="flex flex-col gap-5">
               {/* Header Koleksi */}
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end">
-                <div className="flex items-center gap-3">
-                  <div className="flex flex-col gap-0.5">
-                    <div className="text-white text-xl lg:text-2xl font-bold">
-                      {activeCollection || "Pilih Koleksi Anda"}
-                    </div>
-                  </div>
+                <div className="text-white text-xl lg:text-2xl font-bold">
+                  {activeCollection || "Pilih Koleksi Anda"}
                 </div>
               </div>
 

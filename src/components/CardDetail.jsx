@@ -97,7 +97,7 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
             />
           </div>
 
-          <div className="flex flex-col gap-2  justify-center pl-4">
+          <div className="flex flex-col gap-2 justify-center lg:pl-4">
             <div className="text-base font-bold">#{pokemon.id}</div>
             <div className="font-bold text-2xl">{pokemon.name}</div>
 
@@ -195,7 +195,7 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
 
             <button
               onClick={() => handleSaveToCollection(pokemon)}
-              className="flex w-1/2 text-black transition-all duration-300 gap-2 justify-center py-2 rounded-lg cursor-pointer hover:bg-white/70 items-center mt-4 bg-white/50"
+              className="flex  lg:w-1/2 text-black transition-all duration-300 gap-2 justify-center py-2 rounded-lg cursor-pointer hover:bg-white/70 items-center mt-4 bg-white/50"
             >
               <MdOutlinePlaylistAdd size={24} />
               <p className="">
