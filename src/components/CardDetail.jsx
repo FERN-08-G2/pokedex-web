@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa6";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import PokemonCollectionModal from "./PokemonCollectionModal";
+import { useNavigate } from "react-router";
 
 export default function CardDetail({ pokemon, descript, selectedLang }) {
   const [abilitiesLang, setAbilitiesLang] = useState([]);
@@ -98,21 +99,21 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
           </div>
 
           <div className="flex flex-col gap-2 justify-center lg:pl-4">
-            <div className="text-base font-bold">#{pokemon.id}</div>
-            <div className="font-bold text-2xl">{pokemon.name}</div>
+            <div className="text-base font-bold text-white">#{pokemon.id}</div>
+            <div className="font-bold text-2xl text-white">{pokemon.name}</div>
 
             <div className="flex gap-2">
               {pokemon.types.map((type, i) => (
                 <span
                   key={i}
-                  className="bg-emerald-600 px-2 py-1 rounded text-xs font-semibold capitalize"
+                  className="bg-emerald-600 px-2 py-1 rounded text-xs font-semibold capitalize text-white"
                 >
                   {type.type.name}
                 </span>
               ))}
             </div>
 
-            <div className="text-base my-4">{descript}</div>
+            <div className="text-base my-4 text-white">{descript}</div>
 
             <div className="grid grid-cols-2 gap-3 mt-2 mb-4 w-full max-w-[400px]">
               <div className="bg-lime-600/70 rounded-md px-3 py-2 flex justify-between items-center">
@@ -179,7 +180,7 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
               })}
             </div>
 
-            <p className="font-semibold text-xl mt-4 mb-2">
+            <p className="font-semibold text-xl mt-4 mb-2 text-white">
               {selectedLang === "ja" ? `スキル ` : `Abilities`}
             </p>
             <div className="flex gap-4">
@@ -198,7 +199,7 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
               className="flex  lg:w-1/2 text-black transition-all duration-300 gap-2 justify-center py-2 rounded-lg cursor-pointer hover:bg-white/70 items-center mt-4 bg-white/50"
             >
               <MdOutlinePlaylistAdd size={24} />
-              <p className="">
+              <p className="text-black">
                 {selectedLang === "ja" ? `保存` : `Save To Your Collection`}
               </p>
             </button>
@@ -215,7 +216,7 @@ export default function CardDetail({ pokemon, descript, selectedLang }) {
   );
 }
 
-export function EvolDetailCard({ evolNames }) {
+export function EvolDetailCard({ evolNames, navigateTo }) {
   const [data, setData] = useState([]);
 
   const getData = async () => {
@@ -247,13 +248,17 @@ export function EvolDetailCard({ evolNames }) {
   return (
     <div className="flex items-center justify-around mt-4 p-2 lg:gap-40">
       {data.map((item, i) => (
-        <div key={i} className="flex flex-col items-center gap-4">
+        <div
+          key={i}
+          onClick={() => navigateTo(item.id)}
+          className="flex flex-col items-center gap-4 cursor-pointer hover:bg-white/20 rounded-2xl hover:scale-105 transition-all duration-300"
+        >
           <img
             src={item.sprites.other["official-artwork"].front_default}
             alt={item.name}
             className={`w-24 lg:w-72 h-24 lg:h-72`}
           />
-          <p className="capitalize">{item.name}</p>
+          <p className="capitalize text-white">{item.name}</p>
         </div>
       ))}
     </div>

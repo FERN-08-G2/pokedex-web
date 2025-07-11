@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CardDetail from "../components/CardDetail";
 import { EvolDetailCard } from "../components/CardDetail";
-import { data, useParams } from "react-router";
+import { data, useNavigate, useParams } from "react-router";
 import axios from "axios";
 import NavbarSec from "../components/navbar";
 import LanguageSelector from "../components/LanguageSelector";
@@ -12,6 +12,7 @@ export default function DetailsPages() {
   const [descript, setDescript] = useState("");
   const [evolNames, setEvolNames] = useState([]);
   const [selectedLang, setSelectedLang] = useState("en");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getData() {
@@ -53,7 +54,7 @@ export default function DetailsPages() {
       setEvolNames(evol);
     }
     getData();
-  }, [selectedLang]);
+  }, [selectedLang, id]);
 
   if (!pokemon)
     return (
@@ -76,7 +77,10 @@ export default function DetailsPages() {
       </div>
       <div className="w-full px-2 lg:px-70 py-10">
         <h3 className="text-white text-2xl font-bold mb-4 ml-2">Evolution</h3>
-        <EvolDetailCard evolNames={evolNames} />
+        <EvolDetailCard
+          evolNames={evolNames}
+          navigateTo={(id) => navigate(`/detail/${id}`, { replace: true })}
+        />
       </div>
     </main>
   );

@@ -34,32 +34,36 @@ export default function ItemCard({
           {data?.types.map((item, index) => (
             <div
               key={index}
-              className="bg-emerald-600 outline rounded-lg px-3 py-1"
+              className="bg-emerald-600 outline outline-white text-white rounded-lg px-3 py-1"
             >
               {capitalizeFirstLetter(item?.type.name)}
             </div>
           ))}
         </div>
-        <h1>#{data?.id}</h1>
+        <h1 className="text-white">#{data?.id}</h1>
       </div>
 
       <div className="flex w-full items-center gap-1 ">
         <div className="w-2/3 space-y-4">
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl font-bold text-white">
             {capitalizeFirstLetter(data?.name)}
           </h1>
-          {isFavorite ? <div className="h-8" /> : <p>{data?.description}</p>}
+          {isFavorite ? (
+            <div className="h-8" />
+          ) : (
+            <p className="text-white">{data?.description}</p>
+          )}
           <div className="flex gap-4 items-center">
             <button
               onClick={handleReadMoreClick}
-              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
+              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer text-white"
             >
               Read More
             </button>
 
             <button
               onClick={() => handleSaveToCollection(data)}
-              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer"
+              className="bg-emerald-600 px-4 py-2 rounded-2xl cursor-pointer text-white"
             >
               {isFavorite ? (
                 <FaTrashCan size={22} />

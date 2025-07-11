@@ -29,18 +29,21 @@ function DropdownBtn() {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-rose-800 rounded-box z-1 mt-3 w-52 p-2 shadow top-[40px] right-0"
       >
-        <li className="capitalize">
+        <li className="capitalize text-white">
           <a onClick={() => navigate("/")}>
             <AiFillHome /> home
           </a>
         </li>
         <li>
-          <a onClick={() => navigate("/my-pokemon")} className="capitalize">
+          <a
+            onClick={() => navigate("/my-pokemon")}
+            className="capitalize text-white"
+          >
             <MdCatchingPokemon />
             pokemon
           </a>
         </li>
-        <li className="capitalize">
+        <li className="capitalize text-white">
           <a onClick={() => navigate("/evolve")}>
             <GiRegeneration /> generation detail
           </a>
